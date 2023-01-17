@@ -36,7 +36,7 @@
     <meta-data
       android:name="CLEVERTAP_TOKEN"
       android:value="TEST-ab0-b64"/>
-    <service android:name="com.clevertap.android.sdk.pushnotification.fcm.FcmMessageListenerService"  
+    <service android:name=".MyFcmMessageListenerService"
         android:exported="true">
         <intent-filter>
             <action android:name="com.google.firebase.MESSAGING_EVENT" />

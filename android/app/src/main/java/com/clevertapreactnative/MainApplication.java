@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.clevertap.react.CleverTapApplication;
 import com.clevertap.android.sdk.CleverTapAPI;
-
 import com.clevertap.android.sdk.interfaces.NotificationHandler;
 import com.clevertap.android.pushtemplates.PushTemplateNotificationHandler;
 import com.clevertap.android.pushtemplates.TemplateRenderer;
