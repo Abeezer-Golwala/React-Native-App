@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "clevertap-react-native": "^0.9.4",
+    "clevertap-react-native": "^1.0.0",
     "react": "18.1.0",
     "react-native": "0.70.6"
   },
