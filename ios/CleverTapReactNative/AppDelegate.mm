@@ -28,7 +28,17 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
 
 @implementation AppDelegate
-
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+        // identity if url is the internal deeplinks - Dismiss the presented App Inbox controller    
+if (url) {
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+       }
+   
+    return YES;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   RCTAppSetupPrepareApp(application);

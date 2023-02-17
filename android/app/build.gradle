@@ -277,7 +277,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation 'com.clevertap.android:clevertap-android-sdk:4.6.6'
+    implementation 'com.clevertap.android:clevertap-android-sdk:4.7.2'
     implementation 'androidx.core:core:1.3.0'
     implementation 'androidx.fragment:fragment:1.3.6'
     implementation "com.clevertap.android:push-templates:1.0.5"
