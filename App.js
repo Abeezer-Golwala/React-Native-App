@@ -20,12 +20,21 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 const CleverTap = require('clevertap-react-native');
-CleverTap.setDebugLevel(3);
+
 CleverTap.initializeInbox();
 CleverTap.addListener(CleverTap.CleverTapPushNotificationClicked, (e)=>{console.log(e)});
+
+CleverTap.addListener(CleverTap.CleverTapInboxMessageTapped, (event) => {console.log("Appinbox clicked"+JSON.stringify(event))});
+
+CleverTap.addListener(CleverTap.CleverTapInboxMessageButtonTapped, (event) => {console.log("Appinbox button clicked"+JSON.stringify(event))});
+
 console.log("test")
 // Listener to handle incoming deep links
 Linking.addEventListener('url', (e)=>{console.log("Deeplink inside app"+e.url)});
+
+CleverTap.addListener(CleverTap.CleverTapDisplayUnitsLoaded, (data) => {
+  console.log("displayunits"+JSON.stringify(data))
+});
 
 /// this handles the case where a deep link launches the application
 Linking.getInitialURL().then((url) => {
@@ -96,7 +105,7 @@ const Section = ({children, title}): Node => {
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
+  CleverTap.setLocation
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -119,6 +128,11 @@ const App: () => Node = () => {
         CleverTap.showInbox({
             });
           }} title="App inbox"/> 
+          <Button onPress={() => {
+CleverTap.getAllDisplayUnits((err, res) => {
+  console.log('All Display Units: ', res, err);
+});
+          }} title="display units"/> 
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,

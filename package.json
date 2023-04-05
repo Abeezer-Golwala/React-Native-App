@@ -10,9 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "clevertap-react-native": "^0.9.4",
+    "clevertap-react-native": "^1.0.2",
     "react": "18.1.0",
-    "react-native": "0.70.6"
+    "react-native": "0.70.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

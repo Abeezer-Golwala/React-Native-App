@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 
 #import <React/RCTAppSetupUtils.h>
+#import <React/RCTLog.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -37,6 +38,7 @@ if (url) {
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
        }
    
+    RCTLog(@"Deeplink fired");
     return YES;
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
