@@ -1,5 +1,6 @@
 import React from 'react';
 import type {Node} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,6 +11,7 @@ import {
   useColorScheme,
   View,
   Linking,
+  PermissionsAndroid,
 } from 'react-native';
 
 import {
@@ -19,45 +21,53 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+
+
 const CleverTap = require('clevertap-react-native');
 
 CleverTap.initializeInbox();
+
+
 CleverTap.addListener(CleverTap.CleverTapPushNotificationClicked, (e)=>{console.log(e)});
 
 CleverTap.addListener(CleverTap.CleverTapInboxMessageTapped, (event) => {console.log("Appinbox clicked"+JSON.stringify(event))});
 
 CleverTap.addListener(CleverTap.CleverTapInboxMessageButtonTapped, (event) => {console.log("Appinbox button clicked"+JSON.stringify(event))});
 
+
+
 console.log("test")
 // Listener to handle incoming deep links
 Linking.addEventListener('url', (e)=>{console.log("Deeplink inside app"+e.url)});
+/// this handles the case where a deep link launches the application
+Linking.getInitialURL().then((url) => {
+  if (url) {
+      console.log('launch url', url);
+  }
+}).catch(err => console.error('launch url error', err));
+// check to see if CleverTap has a launch deep link
+
+
+// handles the case where the app is launched from a push notification containing a deep link
+CleverTap.getInitialUrl((err, url) => {
+if (url) {
+    console.log('CleverTap launch url', url);
+} else if (err) {
+    console.log('CleverTap launch url', err);
+}
+});
 
 CleverTap.addListener(CleverTap.CleverTapDisplayUnitsLoaded, (data) => {
   console.log("displayunits"+JSON.stringify(data))
 });
 
-/// this handles the case where a deep link launches the application
-Linking.getInitialURL().then((url) => {
-    if (url) {
-        console.log('launch url', url);
-    }
-}).catch(err => console.error('launch url error', err));
-// check to see if CleverTap has a launch deep link
+
 
 CleverTap.onUserLogin({
   'Name': 'Jack Montana',    
   'Identity': '61022'     
 })
-// handles the case where the app is launched from a push notification containing a deep link
-CleverTap.getInitialUrl((err, url) => {
-  if (url) {
-      console.log('CleverTap launch url', url);
-  } else if (err) {
-      console.log('CleverTap launch url', err);
-  }
-});
-
-
 
 //Initialize app inbox
 CleverTap.initializeInbox();
@@ -73,11 +83,11 @@ CleverTap.addListener(CleverTap.CleverTapInboxMessagesDidUpdate, (event) => {
 
 
 
-
 CleverTap.createNotificationChannel("abtest", "CT Channel id- abtest", "CT React Native Testing", 5, true) 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 const Section = ({children, title}): Node => {
+
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -104,12 +114,20 @@ const Section = ({children, title}): Node => {
 };
 
 const App: () => Node = () => {
+
   const isDarkMode = useColorScheme() === 'dark';
-  CleverTap.setLocation
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  const checkApplicationPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          );
+        } catch (error) {
+      }
+    }};
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -128,6 +146,9 @@ const App: () => Node = () => {
         CleverTap.showInbox({
             });
           }} title="App inbox"/> 
+          <Button onPress={() => {
+       checkApplicationPermission()
+          }} title="push permission"/> 
           <Button onPress={() => {
 CleverTap.getAllDisplayUnits((err, res) => {
   console.log('All Display Units: ', res, err);

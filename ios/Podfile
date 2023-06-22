@@ -9,7 +9,7 @@ target 'CleverTapReactNative' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-  pod 'CleverTap-iOS-SDK'
+  pod 'clevertap-react-native', :path => '../node_modules/clevertap-react-native'
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -30,7 +30,10 @@ target 'CleverTapReactNative' do
     inherit! :complete
     # Pods for testing
   end
-
+  target 'NotificationExtension' do
+    inherit! :complete
+    pod 'clevertap-react-native', :path => '../node_modules/clevertap-react-native'
+  end
   post_install do |installer|
     react_native_post_install(
       installer,

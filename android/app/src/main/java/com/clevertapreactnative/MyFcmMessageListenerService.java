@@ -12,7 +12,6 @@ package com.clevertapreactnative;
 
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.app.NotificationManager;
